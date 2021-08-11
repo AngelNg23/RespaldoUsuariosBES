@@ -29,7 +29,7 @@ public class JdbcConfig {
         DataSource dataSource = null;
         try {
             Context initialContext = new InitialContext();
-            dataSource = (DataSource) initialContext.lookup("jdbc/reporteFoliosSD");
+            dataSource = (DataSource) initialContext.lookup("jdbc/respaldoUsuariosBES");
         } catch (NamingException e) {
             Logger.getLogger(JdbcConfig.class.getName()).log(Level.SEVERE, e.getMessage(), e);
         }

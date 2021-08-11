@@ -5,7 +5,7 @@
  */
 package com.telcel.dashboard.excel;
 
-import com.telcel.dashboard.entity.FoliosSD;
+import com.telcel.dashboard.entity.UsersBES;
 import java.io.IOException;
 import java.util.List;
  
@@ -22,9 +22,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class FoliosSDExcelExporter {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
-    private List<FoliosSD> listUsers;
+    private List<UsersBES> listUsers;
      
-    public FoliosSDExcelExporter(List<FoliosSD> listUsers) {
+    public FoliosSDExcelExporter(List<UsersBES> listUsers) {
         this.listUsers = listUsers;
         workbook = new XSSFWorkbook();
     }
@@ -63,23 +63,23 @@ public class FoliosSDExcelExporter {
     }
      
     private void writeDataLines() {
-        int rowCount = 1;
- 
-        CellStyle style = workbook.createCellStyle();
-        XSSFFont font = workbook.createFont();
-        font.setFontHeight(14);
-        style.setFont(font);
-                 
-        for (FoliosSD user : listUsers) {
-            Row row = sheet.createRow(rowCount++);
-            int columnCount = 0;
-            createCell(row, columnCount++, user.getNoIncidente(), style);
-            createCell(row, columnCount++, user.getDescripcion(), style);
-            createCell(row, columnCount++, user.getEstatus(), style);
-            createCell(row, columnCount++, user.getFechaHoraCreacion().toString(), style);
-            createCell(row, columnCount++, user.getFechaHoraAtencion().toString(), style);
-             
-        }
+//        int rowCount = 1;
+// 
+//        CellStyle style = workbook.createCellStyle();
+//        XSSFFont font = workbook.createFont();
+//        font.setFontHeight(14);
+//        style.setFont(font);
+//                 
+//        for (UsersBES user : listUsers) {
+//            Row row = sheet.createRow(rowCount++);
+//            int columnCount = 0;
+//            createCell(row, columnCount++, user.getNoIncidente(), style);
+//            createCell(row, columnCount++, user.getDescripcion(), style);
+//            createCell(row, columnCount++, user.getEstatus(), style);
+//            createCell(row, columnCount++, user.getFechaHoraCreacion().toString(), style);
+//            createCell(row, columnCount++, user.getFechaHoraAtencion().toString(), style);
+//             
+//        }
     }
      
     public void export(HttpServletResponse response) throws IOException {

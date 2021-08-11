@@ -24,17 +24,96 @@
             </div>
         </nav>
         <center>
-
-            <h3>Reporte de Folios Atendidos de SD</h3>
+            <h3>Respaldo de usuarios BES</h3>
             <br>
         </center>
         <div class="container">
+            <center>
+                <form action="#" th:action="@{/download}"  method="post" modelAttribute="lesson">
+                    <select id="custom-headers" multiple="multiple" th:field="*{ttsinatencion}" class="searchable">
+                        <option th:each="item : ${ttsinatencion}" th:text="${item.groupName}" th:value="${item.groupID}"></option>
+                    </select>
+                    <br>
+                        <div class="col-3"><button type="submit" class="btn btn-success" name="download">Generar</button></div>
+                </form>
+            </center>
+        </div>
+
+
+
+        <script>
+            $('.searchable').multiSelect({
+            selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='Busqueda'>",
+                    selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='Busqueda'>",
+                    afterInit: function (ms) {
+                    var that = this,
+                            $selectableSearch = that.$selectableUl.prev(),
+                            $selectionSearch = that.$selectionUl.prev(),
+                            selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                            selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                            .on('keydown', function (e) {
+                            if (e.which === 40) {
+                            that.$selectableUl.focus();
+                            return false;
+                            }
+                            });
+                    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                            .on('keydown', function (e) {
+                            if (e.which == 40) {
+                            that.$selectionUl.focus();
+                            return false;
+                            }
+                            });
+                    },
+                    afterSelect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                    },
+                    afterDeselect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                    }
+            });
+            $('#myButton').on('click', function(){
+            var strings = [];
+            $('#myForm input[type=checkbox]:checked').each(function(){
+            var string = $(this).closest('tr').find('#mySpan').text();
+            strings.push(string);
+            });
+            $.ajax({
+            url : 'myContext/p',
+                    dataType : 'json',
+                    type: 'POST',
+                    data : {strings : strings},
+                    success: function(response) {
+                    //my success function           
+                    }
+            },
+                    error: function(e) {
+                    //my error function
+                    }
+            }
+            });
+            })
+
+
+
+                    document.getElementById('fechaFinal').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+        </script>
+
+        <style>
+
+        </style>
+    </body>
+</html>
+<!--        <div class="container">
             <form action="#" th:action="@{/download}"  method="post">
                 <div class="form-group row">
-<!--                    <label for="example-date-input" class="col-2 col-form-label">Fecha Inicial</label>
-                    <div class="col-3">
-                        <input class="form-control" type="date" id="fechaInicial" >
-                    </div>-->
+                                        <label for="example-date-input" class="col-2 col-form-label">Fecha Inicial</label>
+                                        <div class="col-3">
+                                            <input class="form-control" type="date" id="fechaInicial" >
+                                        </div>
                     <label for="example-date-input" class="col-2 col-form-label">*Fecha Inicial</label>
                     <div class="col-7">
                         <input class="form-control" type="date" id="fechaFinal" name="fechaFinal" required="true" >
@@ -43,13 +122,4 @@
                         <div class="col-3"><button type="submit" class="btn btn-success">Generar</button></div>
                 </div>
             </form>
-        </div>
-        </div>
-        <script>
-            document.getElementById('fechaFinal').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-        </script>
-
-        <style>
-
-        </style>
-</html>
+        </div>-->
